@@ -316,9 +316,10 @@ $('confirm-import').addEventListener('click', () => {
   period().employees = pendingImport; period().validated = false; pendingImport = null; page = 1; filter = 'all'; $('employee-search').value = ''; $('department-filter').value = 'all';
   saveState(); render(); $('import-dialog').close(); toast('급여자료를 가져왔습니다. 직원별 내역을 다시 확인하세요.');
 });
-$('reset-demo').addEventListener('click', () => confirm('시연 데이터를 초기화할까요?', '이 브라우저에서 수정한 모든 월의 시연 데이터가 초기화됩니다. 필요한 자료는 먼저 CSV로 내려받으세요.', '초기화', () => {
+function resetDemo() { confirm('시연 데이터를 초기화할까요?', '이 브라우저에서 수정한 모든 월의 시연 데이터가 초기화됩니다. 필요한 자료는 먼저 CSV로 내려받으세요.', '초기화', () => {
   state = { version: 1, currentMonth: '2026-09', periods: { '2026-09': createPeriod('2026-09') } }; filter = 'all'; page = 1; $('employee-search').value = ''; $('department-filter').value = 'all'; tourStep = null; saveState(); render(); renderTour(); changeView('payroll'); toast('104명의 가상 직원 데이터로 초기화했습니다.');
-}));
+}); }
+['reset-demo', 'reset-demo-guide'].forEach(id => $(id).addEventListener('click', resetDemo));
 ['demo-tour', 'guide-start'].forEach(id => $(id).addEventListener('click', startTour));
 $('tour-next').addEventListener('click', () => { tourStep = tourStep === tourSteps.length - 1 ? null : tourStep + 1; renderTour(); });
 $('tour-action').addEventListener('click', () => tourSteps[tourStep]?.run());
